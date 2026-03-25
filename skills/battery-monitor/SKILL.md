@@ -1,6 +1,6 @@
 ---
-name: battery_monitor
-description: Run the BatteryAI signal monitoring cycle, update memory, and surface push-worthy market changes.
+name: battery-monitor
+description: Use when the user wants to run the BatteryAI lithium monitor, inspect signal evolution, or check whether a push notification should fire.
 metadata:
   openclaw:
     requires:
@@ -25,6 +25,8 @@ python3 scripts/run_battery_monitor.py
 
 ## Notes
 
+- The bundled script finds the BatteryAI project root from `--project-root`, `BATTERY_MONITOR_PROJECT_ROOT`, `BATTERY_PROJECT_ROOT`, or the current workspace.
+- If the project root cannot be found, ask the user to open the `battery_cost_monitor` repo as the workspace or provide `--project-root`.
 - API data comes from `GET /api/latest`.
-- State is stored in `data/agent_state/battery_signals.json`.
+- State is stored in `data/agent_state/battery_signals.json` inside this skill package unless overridden.
 - Use `--force` only when the user explicitly asks to run outside trading hours.
