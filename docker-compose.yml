@@ -1,0 +1,80 @@
+services:
+  battery-monitor:
+    build: .
+    container_name: battery-cost-monitor
+    ports:
+      - "5001:5001"
+    environment:
+      - PYTHONPATH=/app
+      - FLASK_APP=web_server.py
+      - FLASK_ENV=production
+      - TZ=Asia/Shanghai
+      # 从.env文件加载环境变量
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - SMTP_SERVER=${SMTP_SERVER:-}
+      - SENDER_EMAIL=${SENDER_EMAIL:-}
+      - SENDER_PASSWORD=${SENDER_PASSWORD:-}
+      - EMAIL_RECIPIENTS=${EMAIL_RECIPIENTS:-}
+      - EMAIL_RECIPIENTS_FUTURES=${EMAIL_RECIPIENTS_FUTURES:-}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+      - CACHE_ENABLED=${CACHE_ENABLED:-true}
+      - CACHE_EXPIRY=${CACHE_EXPIRY:-300}
+      - AI_MODEL=${AI_MODEL:-deepseek-chat}
+      - AI_TEMPERATURE=${AI_TEMPERATURE:-0.7}
+      - AI_MAX_TOKENS=${AI_MAX_TOKENS:-2000}
+      - FUTURES_CACHE_DURATION=${FUTURES_CACHE_DURATION:-300}
+      - DAILY_CACHE_DURATION=${DAILY_CACHE_DURATION:-86400}
+      - API_KEY=${API_KEY:-}
+      - SNAPSHOT_CACHE_TTL=${SNAPSHOT_CACHE_TTL:-300}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:5001}
+      - BATTERY_API_BASE_URL=${BATTERY_API_BASE_URL:-http://battery-monitor:5001}
+      - BATTERY_MONITOR_MEMORY_PATH=${BATTERY_MONITOR_MEMORY_PATH:-data/agent_state/battery_signals.json}
+      - PROCUREMENT_CONTEXT_PATH=${PROCUREMENT_CONTEXT_PATH:-data/agent_state/procurement_context.json}
+      - PROCUREMENT_DECISION_LOG_PATH=${PROCUREMENT_DECISION_LOG_PATH:-data/agent_state/procurement_decisions.jsonl}
+    volumes:
+      # 数据持久化
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./logs:/app/logs
+      # 配置文件
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - battery-network
+
+  # 可选：添加nginx反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: battery-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro  # SSL证书目录（可选）
+    depends_on:
+      - battery-monitor
+    restart: unless-stopped
+    networks:
+      - battery-network
+    profiles:
+      - nginx  # 使用profile控制是否启动nginx
+
+networks:
+  battery-network:
+    driver: bridge
+
+volumes:
+  battery-data:
+    driver: local
+  battery-output:
+    driver: local
+  battery-logs:
+    driver: local

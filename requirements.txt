@@ -1,0 +1,47 @@
+# 电池成本监测与价格预测系统依赖包
+
+# 数据处理
+pandas>=1.5.0
+numpy>=1.21.0
+
+# 图表生成
+matplotlib>=3.5.0
+plotly>=5.0.0
+
+# 期货数据获取
+akshare>=1.10.0
+
+# 技术分析
+ta-lib>=0.4.0
+
+# 环境变量管理
+python-dotenv>=0.19.0
+
+# 邮件发送
+requests>=2.28.0
+
+# 任务调度
+schedule>=1.2.0
+
+# 日志管理
+logging
+
+# 类型提示
+typing-extensions>=4.0.0
+
+# Web服务器
+Flask>=2.3.0
+Flask-CORS>=4.0.0
+
+# Excel处理
+openpyxl>=3.0.0
+xlrd>=2.0.0
+
+# 图像处理
+Pillow>=9.0.0
+
+# Markdown处理
+markdown>=3.4.0
+
+# 正则表达式增强
+regex>=2022.0.0

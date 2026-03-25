@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.ccb/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+venv/
+.venv/
+
+logs/
+output/
+data/futures_data/cache/
+data/agent_state/
+
+*.log

@@ -1,0 +1,44 @@
+# 电池成本监测与价格预测系统环境变量配置
+# 复制此文件为 .env 并填入实际值
+
+# DeepSeek API配置（必需）
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+
+# 邮件配置（可选）
+SMTP_SERVER=smtp.qq.com
+SENDER_EMAIL=your_email@qq.com
+SENDER_PASSWORD=your_email_password_here
+EMAIL_RECIPIENTS=recipient1@example.com,recipient2@example.com
+
+# 期货策略专用收件人（可选）
+EMAIL_RECIPIENTS_FUTURES=futures_recipient@example.com
+
+# 系统配置（可选）
+LOG_LEVEL=INFO
+DEBUG_MODE=false
+CACHE_ENABLED=true
+CACHE_EXPIRY=300
+
+# AI导师配置（可选，有默认值）
+AI_MODEL=deepseek-chat
+AI_TEMPERATURE=0.7
+AI_MAX_TOKENS=2000
+
+# 期货数据配置（可选）
+FUTURES_CACHE_DURATION=300
+DAILY_CACHE_DURATION=86400
+
+# API 鉴权
+API_KEY=your_api_key_here
+
+# 快照缓存（秒）
+SNAPSHOT_CACHE_TTL=300
+
+# CORS 允许来源（逗号分隔）
+CORS_ORIGINS=http://localhost:5001
+
+# Agent / Skill 运行配置
+BATTERY_API_BASE_URL=http://127.0.0.1:5001
+BATTERY_MONITOR_MEMORY_PATH=data/agent_state/battery_signals.json
+PROCUREMENT_CONTEXT_PATH=data/agent_state/procurement_context.json
+PROCUREMENT_DECISION_LOG_PATH=data/agent_state/procurement_decisions.jsonl
