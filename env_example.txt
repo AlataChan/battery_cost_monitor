@@ -42,3 +42,7 @@ BATTERY_API_BASE_URL=http://127.0.0.1:5001
 BATTERY_MONITOR_MEMORY_PATH=data/agent_state/battery_signals.json
 PROCUREMENT_CONTEXT_PATH=data/agent_state/procurement_context.json
 PROCUREMENT_DECISION_LOG_PATH=data/agent_state/procurement_decisions.jsonl
+
+# 飞书机器人配置
+FEISHU_APP_ID=your_feishu_app_id_here
+FEISHU_APP_SECRET=your_feishu_app_secret_here
